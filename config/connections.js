@@ -89,4 +89,14 @@ module.exports.connections = {
   *                                                                          *
   ***************************************************************************/
 
+  sqlserver: {
+    adapter: 'sails-sqlserver',
+    user: 'sa',
+    password: 'p@ssw0rd',
+    host: '128.1.3.102',
+    database: 'WapTaskOrderConfig'
+    // options: {
+    //   encrypt: true   // use this for Azure databases
+    // }
+  }
 };

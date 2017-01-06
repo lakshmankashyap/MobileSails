@@ -34,7 +34,7 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -46,4 +46,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  //'/device/all': {response: 'notFound'}
+  // 'GET /message/push': {response: 'notFound'},
+  // 'PUT /message/push': {response: 'notFound'}
 };
