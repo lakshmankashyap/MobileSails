@@ -41,6 +41,7 @@ function push(req, res) {
   return PushService.send(userId, data)
     .then(ok => {
       console.log(tag, "success userId: " + userId + ", data: " + data);
+      successResult.data = null;
       return res.json(successResult);
     })
     .catch(err => {

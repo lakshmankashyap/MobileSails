@@ -70,7 +70,7 @@ function fetchAll(users) {
   //   });
   // }
 
-  fetchOne(6022, "Androidqwert")
+  fetchOne(6022, "352584065447226")
     .then(result => {
       console.log(result);
     })
