@@ -8,11 +8,14 @@
 module.exports = {
   connection: 'sqlserver',
   tableName: 'MOBILE_DEVICE',
+  autoCreatedAt: false,
+  autoUpdatedAt: false,
   attributes: {
     id: {
       type: 'integer',
       unique: true,
       primaryKey: true,
+      autoIncrement: true,
       columnName: 'ID'
     },
 

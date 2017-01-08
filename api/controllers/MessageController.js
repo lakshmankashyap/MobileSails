@@ -6,31 +6,22 @@
  */
 
 let timer = require('timers');
-
-let errorResult = {
-  code: -1,
-  statusCode: 200,
-  message: 'param is error'
-};
-
-let successResult = {
-  code: 0,
-  statusCode: 200,
-  message: null
-};
+const tag = "\<MessageController\>"
 
 function push(req, res) {
-  let userId = req.param('userId');
+  let userId = Number.parseInt(req.param('userId'));
   let body = req.body;
   let method = req.method;
+  let errorResult = ConstantService.errorResult;
+  let successResult = ConstantService.successResult;
   if (method !== 'POST') {
-    errorResult.message = 'POST method is must';
+    errorResult.message = ConstantService.postMust;
     return res.json(errorResult);
-  } else if (!userId) {
-    errorResult.message = 'userId is error';
+  } else if (Number.isNaN(userId)) {
+    errorResult.message = ConstantService.paramError;
     return res.json(errorResult);
   } else if (!body) {
-    errorResult.message = 'body is error';
+    errorResult.message = ConstantService.bodyError;
     return res.json(errorResult);
   }
 
@@ -43,29 +34,33 @@ function push(req, res) {
   }
 
   if (!data) {
-    errorResult.message = 'body is error';
+    errorResult.message = ConstantService.bodyError;
     return res.json(errorResult);
   }
 
   return PushService.send(userId, data)
     .then(ok => {
-      console.log("\<push\>success userId: " + userId + ", data: " + data);
+      console.log(tag, "success userId: " + userId + ", data: " + data);
       return res.json(successResult);
     })
     .catch(err => {
-      console.log("\<push\>" + err);
+      console.log(tag, err);
       errorResult.message = 'failure to push a message';
       return res.json(errorResult);
     });
 }
 
-timer.setTimeout(() => {
-  try {
-    PullService.receive();
-  } catch (err) {
-    console.error(err);
-  }
-}, 10000);
+function pull(interval) {
+  timer.setTimeout(() => {
+    try {
+      PullService.receive();
+    } catch (err) {
+      console.error(err);
+    }
+  }, 10000);
+}
+
+pull();
 
 module.exports = {
   _config: {
