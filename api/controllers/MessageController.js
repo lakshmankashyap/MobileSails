@@ -61,7 +61,7 @@ function pull(interval) {
   }, 10000);
 }
 
-pull();
+//pull();
 
 module.exports = {
   _config: {

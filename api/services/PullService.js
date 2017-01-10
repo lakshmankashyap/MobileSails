@@ -30,7 +30,7 @@ function fetchOne(userId, deviceId) {
                 return ch.assertQueue(q, options)
                   .then(ok => {
                     return ch.prefetch(10).then(ok => {
-                      return ch.bindQueue(q, 'amq.topic', 'abc')
+                      return ch.bindQueue(q, 'amq.topic', 'test')
                         .then(ok=> {
                           return ch.consume(q, msg => {
                             if (msg !== null) {
@@ -70,7 +70,7 @@ function fetchAll(users) {
   //   });
   // }
 
-  fetchOne(6022, "352584065447226")
+  fetchOne(6022, "Androidqwert")
     .then(result => {
       console.log(result);
     })
