@@ -52,7 +52,8 @@ function push(req, res) {
 }
 
 function pull(interval) {
-  timer.setTimeout(() => {
+  let timeOunt = setTimeout(() => {
+    clearTimeout(timeOut);
     try {
       PullService.receive();
     } catch (err) {

@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-  connection: 'sqlserver',
+  //connection: 'sqlserver',
   tableName: 'MOBILE_LOCATION',
   attributes: {
     id: {
