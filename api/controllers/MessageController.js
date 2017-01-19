@@ -51,18 +51,48 @@ function push(req, res) {
     });
 }
 
-function pull(interval) {
-  let timeOunt = setTimeout(() => {
-    clearTimeout(timeOut);
-    try {
-      PullService.receive();
-    } catch (err) {
-      console.error(err);
-    }
-  }, 10000);
-}
+// function pull(interval) {
+//   let timeOut = setTimeout(() => {
+//     clearTimeout(timeOut);
+//     try {
+//       PullService.receive();
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   }, 10000);
+// }
 
 //pull();
+
+function umengPush(req, res) {
+  let userId = Number.parseInt(req.param('userId'));
+  let body = req.body;
+  let method = req.method;
+  let errorResult = ConstantService.errorResult;
+  let successResult = ConstantService.successResult;
+  if (method !== 'POST') {
+    errorResult.message = ConstantService.postMust;
+    return res.json(errorResult);
+  } else if (Number.isNaN(userId)) {
+    errorResult.message = ConstantService.paramError;
+    return res.json(errorResult);
+  } else if (!body) {
+    errorResult.message = ConstantService.bodyError;
+    return res.json(errorResult);
+  }
+
+  return UmengService.send(userId, body)
+    .then(ok => {
+      console.log(tag, "success userId: " + userId + ", data: " + body);
+      successResult.data = null;
+      return res.json(successResult);
+    })
+    .catch(err => {
+      console.log(tag, err);
+      errorResult.message = 'failure to push a message';
+      return res.json(errorResult);
+    });
+}
 
 module.exports = {
   _config: {
@@ -72,6 +102,7 @@ module.exports = {
   },
 
   // message/push?userId={userId}
-  push: push
+  push: push,
+  umengPush: umengPush
 };
 

@@ -48,5 +48,5 @@ module.exports.routes = {
 
   //'/device/all': {response: 'notFound'}
   // 'GET /message/push': {response: 'notFound'},
-  // 'PUT /message/push': {response: 'notFound'}
+  'POST /message/umeng/push': 'MessageController.umengPush'
 };
