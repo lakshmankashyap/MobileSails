@@ -4,7 +4,7 @@ const suffix = 'qos0';
 
 function getOnlineUsers() {
   return new Promise((resolve, reject) => {
-    DeviceService.getOnlineUsers({}, (err, results) => {
+    DeviceService.getOnlineUsers(false, (err, results) => {
       return err ? reject(err) : resolve(results);
     });
   });

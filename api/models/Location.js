@@ -112,7 +112,12 @@ module.exports = {
       type: 'string',
       required: true,
       columnName: 'DEVICE_ID'
-    }
+    },
+
+    extend : {
+      type: 'string',
+      columnName: 'EXTEND'
+    },
   }
 };
 
