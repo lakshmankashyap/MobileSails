@@ -57,8 +57,8 @@ function createNewDevice(req, res) {
     macAddress: body.macAddress,
     activeTime: new Date(body.activeTime),
     activeCode: ConstantService.activeCode,
-    activeState: ConstantService.activeState,
-    deviceState: ConstantService.deviceState
+    activeState: body.activeState ? body.activeState : ConstantService.activeState,
+    deviceState: body.deviceState ? body.deviceState : ConstantService.deviceState
   };
 
   return Device.findOrCreate({macAddress: body.macAddress}, device).exec(function (err, newDevice) {
@@ -101,6 +101,14 @@ function updateDevice(req, res) {
     macAddress: body.macAddress,
     activeTime: new Date(body.activeTime)
   };
+
+  if (body.activeState) {
+    device.activeState = body.activeState;
+  }
+
+  if (body.deviceState) {
+    device.deviceState = body.deviceState;
+  }
 
   return Device.update({id: id}, device).exec(function (err, updated) {
     if (err) {
