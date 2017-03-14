@@ -10,7 +10,7 @@ const appMasterSecret = 'd6jdf0fjrdy05aspgmuwobsulnw4auez';
 
 function getUser(userId) {
   return new Promise((resolve, reject) => {
-    DeviceService.getOnlineUsers(true, (err, results) => {
+    DeviceService.getOnlineDevices(userId, (err, results) => {
       if (err) {
         return reject(err);
       } else {
@@ -64,6 +64,8 @@ function publish(userId, deviceTokens, message) {
       || (message.content.length <= 0)) {
       return reject('this message has no content');
     }
+
+    console.dir(message);
 
     let params = {
       'appkey': appKey,

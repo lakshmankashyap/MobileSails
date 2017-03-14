@@ -1,10 +1,9 @@
-
 function getUsersWithExtend(done) {
   let date = new Date();
   let time = date.getTime() + ConfigService.timeZone; // 8-hour time zone
   time -= ConfigService.pushPeriod;
   date.setTime(time);
-  Location.find({ time: { '>=': date }}).exec(function (err, records) {
+  Location.find({time: {'>=': date}}).exec(function (err, records) {
     if (err) {
       return done(err);
     }
@@ -44,7 +43,7 @@ function getUsers(done) {
   let time = date.getTime() + ConfigService.timeZone; // 8-hour time zone
   time -= ConfigService.pushPeriod;
   date.setTime(time);
-  Location.find({ time: { '>=': date }}).exec(function (err, records) {
+  Location.find({time: {'>=': date}}).exec(function (err, records) {
     if (err) {
       return done(err);
     }
@@ -83,7 +82,36 @@ function getOnlineUsers(isUsingExtend, done) {
   }
 }
 
+function getOnlineDevices(userId, done) {
+  Location.find({
+    where: {userId: userId},
+    limit: 1,
+    sort: 'time DESC'
+  }).exec(function (err, records) {
+    if (err) {
+      return done(err);
+    }
+
+    let results = [];
+    for (let i = 0; i < records.length; i++) {
+      let record = records[i];
+      if (!record.extend) {
+        continue;
+      }
+
+      results.push({
+        userId: record.userId,
+        deviceId: record.deviceId,
+        extend: record.extend
+      });
+    }
+
+    return done(null, results);
+  });
+}
+
 
 module.exports = {
-  getOnlineUsers : getOnlineUsers
+  getOnlineUsers: getOnlineUsers,
+  getOnlineDevices: getOnlineDevices
 };
