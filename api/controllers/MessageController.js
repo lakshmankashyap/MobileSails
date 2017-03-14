@@ -6,7 +6,7 @@
  */
 
 let timer = require('timers');
-const tag = "\<MessageController\>"
+const tag = "\<MessageController\>";
 
 function push(req, res) {
   let userId = Number.parseInt(req.param('userId'));
@@ -94,6 +94,36 @@ function umengPush(req, res) {
     });
 }
 
+function hwPush(req, res) {
+  // let userId = Number.parseInt(req.param('userId'));
+  // let body = req.body;
+  // let method = req.method;
+  // let errorResult = ConstantService.errorResult;
+  // let successResult = ConstantService.successResult;
+  // if (method !== 'POST') {
+  //   errorResult.message = ConstantService.postMust;
+  //   return res.json(errorResult);
+  // } else if (Number.isNaN(userId)) {
+  //   errorResult.message = ConstantService.paramError;
+  //   return res.json(errorResult);
+  // } else if (!body) {
+  //   errorResult.message = ConstantService.bodyError;
+  //   return res.json(errorResult);
+  // }
+
+  return HwService.send()
+    .then(ok => {
+      // console.log(tag, "success userId: " + userId + ", data: " + body);
+      // successResult.data = null;
+      return res.json("push is successful");
+    })
+    .catch(err => {
+      // console.log(tag, err);
+      // errorResult.message = 'failure to push a message';
+      return res.json("fail");
+    });
+}
+
 module.exports = {
   _config: {
     actions: true,
@@ -103,6 +133,7 @@ module.exports = {
 
   // message/push?userId={userId}
   push: push,
-  umengPush: umengPush
+  umengPush: umengPush,
+  hwPush: hwPush
 };
 
